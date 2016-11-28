@@ -1,0 +1,292 @@
+﻿Version=6.3
+NumberOfModules=3
+Module1=HttpJob
+Module2=HttpUtils2Service
+Module3=DownloadService
+Build1=Default,com.htetznaing.ddayhacked
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.basic4ppc.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="19"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~'AdMob~\n~AddApplicationText(~\n~<meta-data android:name="com.google.android.gms.version"~\n~  android:value="@integer/google_play_services_version"/>~\n~<activity android:name="com.google.android.gms.ads.AdActivity"~\n~  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>~\n~)~\n~'End of AdMob
+IconFile=
+NumberOfFiles=4
+File1=d-day_3.0.4.apk
+File2=icon.png
+File3=ps.png
+File4=share.png
+NumberOfLibraries=10
+Library1=core
+Library2=okhttp
+Library3=phone
+Library4=randomaccessfile
+Library5=stringutils
+Library6=admob
+Library7=mwadmobinterstitial2 (2)
+Library8=xmllayoutbuilder
+Library9=id
+Library10=clipboard
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: D Day Unlimited Hacked!
+	#VersionCode: 1
+	#VersionName: 1.0
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+	#AdditionalRes: D:\Android\android-sdk\extras\google\google-play-services\libproject\google-play-services_lib\res, com.google.android.gms
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+	Private link1 As String = "https://github.com/MgHtetzNaing/DDay/releases/download/v1.0/dday.obb"
+	Dim t As Timer
+	Dim Theme_Value As Int
+End Sub
+
+Sub Globals
+	Dim ProgressBar1 As ProgressBar
+	Dim Label1 As Label
+	Dim btnOBB As Button
+	Dim btnCancel,btnResume As Button
+	Dim Install,Tutotial As Button
+	Dim Banner As AdView
+	Dim Interstitial As mwAdmobInterstitial
+		Dim res As XmlLayoutBuilder
+			Dim lis As List
+	Dim idd As id
+	Dim idd_int As Int
+	Dim p As Phone
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	p.SetScreenOrientation(1)
+	If p.SdkVersion > 19 Then
+	Banner.Initialize("Banner","ca-app-pub-4173348573252986/9809481351")
+	Banner.LoadAd
+	Activity.AddView(Banner,0%x,90%y,100%x,10%y)
+	
+	Interstitial.Initialize("Interstitial","ca-app-pub-4173348573252986/2286214551")
+	Interstitial.LoadAd
+	End If
+	t.Initialize("t",15000)
+	t.Enabled = True
+	
+	Install.Initialize("install")
+	Install.Text = "Install"
+	Tutotial.Initialize("Tutorial")
+	Tutotial.Text = "Tutorial"
+	
+		btnOBB.Initialize("btnOBB")
+	btnOBB.Text = "Add Obb File"
+	btnCancel.Initialize("btnCancel")
+	btnCancel.Text = "Cancel"
+	btnResume.Initialize("btnResume")
+	btnResume.Text = "Download"
+	
+	Label1.Initialize("Label1")
+	ProgressBar1.Initialize("ProgressBar1")
+	
+	Activity.AddView(Install,20%x,30%y,60%x,10%y)
+	Activity.AddView(btnOBB,20%x,(Install.Top+Install.Height)+2%y,60%x,10%y)
+	Activity.AddView(Tutotial,20%x,(btnOBB.Top+btnOBB.Height)+2%y,60%x,10%y)
+	
+	Activity.AddMenuItem("Stop Showing Ads!","rad")
+Activity.AddMenuItem("Change Theme","ct")
+Activity.AddMenuItem3("Share This App","share",LoadBitmap(File.DirAssets,"share.png"),True)
+
+End Sub
+
+Sub share_Click
+Dim ShareIt As Intent
+Dim copy As BClipboard
+copy.clrText
+copy.setText("#One_Click_Email_Generator! Do You Like This App? So, Please Share!!! This Is www.temp-mail.org Android App! Temp Mail service Is Not just a one-off designed project. Temp Mail has ambitious plans To further improve its service. We strive For the ideal in order To achieve As close As possible perfection. Your suggestions And comments are very useful. We take everything into account And implement useful suggestions into standard practice. Do you like our anonymous e-mail service? You can suggest our service To other users in a reviews. If you can think of ways To assist us To achieve perfection, your comments will allow our joint efforts To make the service more convenient, user friendly, And meet the needs of other users requiring a temporary email address.We invite you To help us To improve our services. We offer you the most secure anonymous email And most comfortable user interface. Download Free at Google Play Store: https://play.google.com/store/apps/details?id=com.htetznaing.tempmail")
+    ShareIt.Initialize (ShareIt.ACTION_SEND,"")
+    ShareIt.SetType ("text/plain")
+    ShareIt.PutExtra ("android.intent.extra.TEXT",copy.getText)
+    ShareIt.PutExtra ("android.intent.extra.SUBJECT","#One_Click_Email_Generator!")
+    ShareIt.WrapAsIntentChooser("Share App Via...")
+StartActivity (ShareIt)
+End Sub
+
+Sub ct_Click
+	lis.Initialize
+	lis.AddAll(Array As String("Holo","Holo Light","Holo Light Dark","Old Android","Material","Material Light","Material Light Dark","Transparent","Transparent No Title Bar"))
+	idd_int = idd.InputList1(lis,"Choose Themes!")
+	If idd_int = 0 Then
+		SetTheme(res.GetResourceId("style", "android:style/Theme.Holo"))
+	End If
+	
+	If idd_int = 1 Then
+		SetTheme(res.GetResourceId("style", "android:style/Theme.Holo.Light"))
+	End If
+	
+	If idd_int = 2 Then
+		SetTheme(res.GetResourceId("style", "android:style/Theme.Holo.Light.DarkActionBar"))
+	End If
+	
+	If idd_int = 3 Then
+		SetTheme(16973829)
+	End If
+	
+	If idd_int = 4 Then
+		SetTheme(res.GetResourceId("style", "android:style/Theme.Material"))
+	End If
+	
+	If idd_int = 5 Then
+		SetTheme(res.GetResourceId("style", "android:style/Theme.Material.Light"))
+	End If
+	
+	If idd_int = 6 Then
+		SetTheme(res.GetResourceId("style", "android:style/Theme.Material.Light.DarkActionBar"))
+	End If
+	
+If idd_int = 7 Then
+	SetTheme(res.GetResourceId("style", "android:style/Theme.Translucent"))
+End If
+
+If idd_int = 8 Then
+	SetTheme(res.GetResourceId("style", "android:style/Theme.Translucent.NoTitleBar"))
+End If
+
+End Sub
+
+Private Sub SetTheme (Theme As Int)
+	If Theme = 0 Then
+		ToastMessageShow("Theme not available.", False)
+		Return
+	End If
+	If Theme = Theme_Value Then Return
+	Theme_Value = Theme		
+	Activity.Finish
+	StartActivity(Me)		
+End Sub
+
+
+#if java
+public void _onCreate() {
+	if (_theme_value != 0)
+		setTheme(_theme_value);
+}
+#end if
+
+Sub rad_Click
+	t.Enabled = False
+End Sub
+
+Sub t_Tick
+	If p.SdkVersion > 19 Then
+	If Interstitial.Status=Interstitial.Status_AdReadyToShow Then
+	Interstitial.Show
+	End If
+	
+	If Interstitial.Status=Interstitial.Status_Dismissed Then
+	Interstitial.LoadAd
+	End If
+	Else
+		End If
+End Sub
+
+Sub Install_Click
+File.Copy(File.DirAssets,"D-Day_3.0.4.apk",File.DirRootExternal,"D_Day_3.0.4.apk")
+Msgbox("1. Click 'OK' Below to Install App!" & CRLF & "2. After Install Finished!" & CRLF& "Do not click 'Open' button" & CRLF & "Click 'Done' button to come back here and" & CRLF & "click 'Add Obb File' button below!","WARNING!")
+Dim i As Intent
+i.Initialize(i.ACTION_VIEW,"file:///"&File.DirRootExternal&"/D_Day_3.0.4.apk")
+i.SetType("application/vnd.android.package-archive")
+StartActivity(i)
+End Sub
+
+Sub btnOBB_Click
+	Dim size As Long
+		size = File.Size(File.DirRootExternal &"/Android/obb/com.glu.flcn_new","main.304.com.glu.flcn_new.obb")
+		If size > 328612 Then
+			Msgbox("You are already installed hacked! if you have any problem? Unistall current D Day Game App and try again.","Attention!")
+		Else
+			Msgbox("Firstly! Turn On Your internet!","Need Internet Connection!")
+			Dim a As Int
+		a = 	Msgbox2("You NEED Download HACKED Unlimted OBB File. CLICK 'OK' button below to Start Download File and after you will get D-Day Unlimited Hacked","Attention!","OK","","Cancel",Null)
+			If a = DialogResponse.POSITIVE Then
+				Activity.AddView(btnCancel,10%x,15%y,35%x,10%y)
+				Activity.AddView(btnResume,55%x,15%y,35%x,10%y)
+				Activity.AddView(ProgressBar1,5%x,5%y,90%x,2%y)
+	Activity.AddView(Label1,5%x,(ProgressBar1.Top+ProgressBar1.Height)+2%y,90%x,5%y)
+	Dim dd As DownloadData
+	dd.url = link1
+	dd.EventName = "dd"
+	dd.Target = Me
+	CallSubDelayed2(DownloadService, "StartDownload", dd)
+	End If
+	End If
+End Sub
+
+Sub Tutorial_Click
+	Dim pi As PhoneIntents
+	StartActivity(pi.OpenBrowser("http://ht3tzn4ing.blogspot.com/2016/11/DDayUnlimitedHacked.html"))
+End Sub
+
+Sub dd_Progress(Progress As Long, Total As Long)
+	ProgressBar1.Progress = Progress / Total * 100
+	Label1.Text = NumberFormat(Progress / 1024, 0, 0) & "KB / " & _
+		NumberFormat(Total / 1024, 0, 0) & "KB"
+End Sub
+
+Sub dd_Complete(Job As HttpJob)
+	Dim MyPath As String
+	MyPath = File.DirRootExternal & "/Android/obb/com.glu.flcn_new"
+If 	File.Exists(MyPath,"") = False Then
+	File.MakeDir(File.DirRootExternal &"/Android/obb","com.glu.flcn_new")
+End If
+Dim o As OutputStream
+    o = File.OpenOutput(MyPath, "main.304.com.glu.flcn_new.obb", False)
+    File.Copy2(Job.GetInputStream, o)
+    o.Close
+    Log("Job completed: " & Job.Success)
+    Job.Release
+	Dim size As Long
+		size = File.Size(File.DirRootExternal &"/Android/obb/com.glu.flcn_new","main.304.com.glu.flcn_new.obb")
+		If size > 328612 Then
+	Msgbox2("D-Day Unlimited Hacked Install Finished. Enjoy :)","Completed","Ok","","",Null)
+	Else
+		Msgbox("You download File not completed, please Download again!","ERROR!")
+	End If
+End Sub
+
+Sub btnCancel_Click
+		CallSubDelayed2(DownloadService, "CancelDownload", link1)
+End Sub
+
+Sub btnResume_Click
+		Dim dd As DownloadData
+	dd.url = link1
+	dd.EventName = "dd"
+	dd.Target = Me
+	CallSubDelayed2(DownloadService, "StartDownload", dd)
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+Sub Activity_KeyPress (KeyCode As Int) As Boolean
+  Dim Answ As Int
+  If KeyCode = KeyCodes.KEYCODE_BACK Then
+    Answ = Msgbox2("Do you want to Exit App?", "Attention!", "Yes", "", "No", Null)
+    If Answ = DialogResponse.NEGATIVE Then
+		If File.Exists(File.DirRootExternal,"D_Day_3.0.4.apk") Then
+		File.Delete(File.DirRootExternal,"D_Day_3.0.4.apk")
+      Return True
+    End If
+	End If
+  End If
+  If Answ = DialogResponse.POSITIVE Then
+  	If File.Exists(File.DirRootExternal,"D_Day_3.0.4.apk") Then
+		File.Delete(File.DirRootExternal,"D_Day_3.0.4.apk")
+  Return False
+  End If
+  End If
+End Sub
